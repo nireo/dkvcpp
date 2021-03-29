@@ -85,6 +85,12 @@
 		<Unit filename="/home/eemil/dev/c++/dkvcpp/main.cpp">
 			<Option target="dkvcpp"/>
 		</Unit>
+		<Unit filename="/home/eemil/dev/c++/dkvcpp/server.cpp">
+			<Option target="dkvcpp"/>
+		</Unit>
+		<Unit filename="/home/eemil/dev/c++/dkvcpp/server.hpp">
+			<Option target="dkvcpp"/>
+		</Unit>
 		<Unit filename="/home/eemil/dev/c++/dkvcpp/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

@@ -1,1 +1,1 @@
-/usr/bin/c++  -g   CMakeFiles/dkvcpp.dir/main.cpp.o  -o dkvcpp 
+/usr/bin/c++  -g   CMakeFiles/dkvcpp.dir/main.cpp.o CMakeFiles/dkvcpp.dir/server.cpp.o  -o dkvcpp 

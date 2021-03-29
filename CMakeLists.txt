@@ -3,4 +3,4 @@ project(dkvcpp)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(dkvcpp main.cpp)
+add_executable(dkvcpp main.cpp server.cpp server.hpp)
