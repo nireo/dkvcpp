@@ -94,12 +94,12 @@ clean: CMakeFiles/dkvcpp.dir/clean
 CMakeFiles/dkvcpp.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dkvcpp.dir/build.make CMakeFiles/dkvcpp.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dkvcpp.dir/build.make CMakeFiles/dkvcpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/eemil/dev/c++/dkvcpp/cmake-build-debug/CMakeFiles --progress-num=1,2,3 "Built target dkvcpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/eemil/dev/c++/dkvcpp/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4 "Built target dkvcpp"
 .PHONY : CMakeFiles/dkvcpp.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/dkvcpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/eemil/dev/c++/dkvcpp/cmake-build-debug/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/eemil/dev/c++/dkvcpp/cmake-build-debug/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/dkvcpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/eemil/dev/c++/dkvcpp/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/dkvcpp.dir/rule

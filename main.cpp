@@ -4,36 +4,18 @@
 #include "leveldb/db.h"
 #include "server.hpp"
 
-using namespace std;
+int main(int argc, char** argv) {
+    if (argc < 2) {
+        std::cout << "you need to provide the current shard index" << "\n";
+        return EXIT_FAILURE;
+    }
 
-int main() {
+    int curr_shard = std::stoi(argv[1]);
+    Config config("sharding.toml");
+
     Server s;
     s.init_database_connection("/tmp/database");
 
-    string key = "name";
-    string value = "test";
-
-    // write
-    leveldb::Status status;
-    status = s.put(key, value);
-    assert(status.ok());
-
-    // read
-    status = s.get(key, &value);
-    assert(status.ok());
-
-    cout << value << endl;
-
-    // delete
-    status = s.del(key);
-    assert(status.ok());
-
-    status = s.get(key, &value);
-    if (!status.ok()) {
-        cerr << key << "    " << status.ToString() << endl;
-    } else {
-        cout << key << "===" << value << endl;
-    }
-
-    return 0;
+    s.start("localhost", 8080);
+    return EXIT_SUCCESS;
 }

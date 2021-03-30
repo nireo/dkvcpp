@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/dkvcpp.dir/config.cpp.o"
   "CMakeFiles/dkvcpp.dir/main.cpp.o"
   "CMakeFiles/dkvcpp.dir/server.cpp.o"
   "dkvcpp"

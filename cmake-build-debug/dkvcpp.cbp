@@ -82,6 +82,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/eemil/dev/c++/dkvcpp/config.cpp">
+			<Option target="dkvcpp"/>
+		</Unit>
+		<Unit filename="/home/eemil/dev/c++/dkvcpp/config.hpp">
+			<Option target="dkvcpp"/>
+		</Unit>
 		<Unit filename="/home/eemil/dev/c++/dkvcpp/main.cpp">
 			<Option target="dkvcpp"/>
 		</Unit>

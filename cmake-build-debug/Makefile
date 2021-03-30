@@ -143,6 +143,33 @@ dkvcpp/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dkvcpp.dir/build.make CMakeFiles/dkvcpp.dir/build
 .PHONY : dkvcpp/fast
 
+config.o: config.cpp.o
+
+.PHONY : config.o
+
+# target to build an object file
+config.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dkvcpp.dir/build.make CMakeFiles/dkvcpp.dir/config.cpp.o
+.PHONY : config.cpp.o
+
+config.i: config.cpp.i
+
+.PHONY : config.i
+
+# target to preprocess a source file
+config.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dkvcpp.dir/build.make CMakeFiles/dkvcpp.dir/config.cpp.i
+.PHONY : config.cpp.i
+
+config.s: config.cpp.s
+
+.PHONY : config.s
+
+# target to generate assembly for a file
+config.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dkvcpp.dir/build.make CMakeFiles/dkvcpp.dir/config.cpp.s
+.PHONY : config.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -206,6 +233,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... dkvcpp"
+	@echo "... config.o"
+	@echo "... config.i"
+	@echo "... config.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

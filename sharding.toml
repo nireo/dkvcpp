@@ -1,0 +1,14 @@
+[shard]
+addr = "localhost:8080"
+shard_index = 0
+name = "dkvshard1"
+
+[shard]
+addr = "localhost:8081"
+shard_index = 1
+name = "dkvshard2"
+
+[shard]
+addr = "localhost:8082"
+shard_index = 2
+name = "dkvshard3"
