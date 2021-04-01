@@ -2,35 +2,32 @@
 #include <string>
 #include "server.hpp"
 #include "db.hpp"
-#include "./include/toml.hpp"
+#include "config.hpp"
 
 using namespace std::string_view_literals;
 int main(int argc, char** argv) {
     if (argc < 2) {
-        std::cout << "you need to provide the current shard index" << "\n";
+        std::cout << "you need to provide the current shard name" << "\n";
         return EXIT_FAILURE;
     }
+
+    Config conf;
+    conf.verify_shards(std::string(argv[1]));
 
     DB db("./dkvdb");
     httplib::Server srv;
 
-    toml::table tbl;
-    try {
-        tbl = toml::parse_file("sharding.toml");
-        for (auto&& [k, v] : tbl)
-        {
-            v.visit([](auto& node) noexcept
-                    {
-                        std::cout << node.as_table()->get("addr");
-                    });
-        }
-    } catch (const toml::parse_error& err) {
-        std::cerr << "Parsing failed:\n" << err << "\n";
-        return 1;
-    }
-
-    srv.Get("/key", [&](const httplib::Request& req, httplib::Response& res) {
+    srv.Get("/get", [&](const httplib::Request& req, httplib::Response& res) {
         auto key = req.get_param_value("key");
+        // calculate the shard hash for the given key
+        uint32 shard = conf.get_key_shard(key);
+        if (shard != conf.get_index()) {
+            // if the shard doesn't match we need to move it to the matching shard
+            std::string addr = conf.get_shard_addr(shard);
+            res.set_redirect(addr + "/get?key="+key);
+            return;
+        }
+
         std::cout << key << "\n";
         std::string value;
         leveldb::Status st = db.get(key, &value);
@@ -44,9 +41,17 @@ int main(int argc, char** argv) {
         }
     });
 
-    srv.Put("/key", [&](const httplib::Request& req, httplib::Response& res) {
+    // this is also get such that redirecting doesn't screw up and it really doesn't matter which one it is :)
+    srv.Get("/set", [&](const httplib::Request& req, httplib::Response& res) {
         auto key = req.get_param_value("key");
         auto value = req.get_param_value("value");
+
+        uint32 shard = conf.get_key_shard(key);
+        if (shard != conf.get_index()) {
+            std::string addr = conf.get_shard_addr(shard);
+            res.set_redirect(addr+"/set?key="+key+"&val="+value);
+            return;
+        }
 
         leveldb::Status st = db.put(key, value);
         if (st.ok()) {

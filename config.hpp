@@ -18,14 +18,19 @@ struct Shard {
 typedef unsigned int uint32;
 class Config {
 public:
-    explicit Config(const std::string& conf_filepath);
+    explicit Config();
     [[nodiscard]] uint32 get_key_shard(const std::string& key) const;
 
-    bool verify_shards(const std::vector<Shard>& shards, const std::string& cur_name);
+    bool verify_shards(const std::string& cur_name);
+
+    int get_index() const;
+    std::string get_shard_addr(int index) const;
     ~Config() = default;
 private:
     uint32 m_shard_count;
     uint32 m_current_index;
+
+    std::vector<Shard> m_shards;
     std::unordered_map<int, std::string> m_addrs;
 };
 
