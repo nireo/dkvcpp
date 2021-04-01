@@ -8,7 +8,6 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
-#include <json/value.h>
 
 struct Shard {
     int index;

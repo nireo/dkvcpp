@@ -4,11 +4,8 @@
 
 #include "config.hpp"
 #include <fstream>
-#include "./include/toml11/toml.hpp"
 
 Config::Config(const std::string &conf_filepath) {
-    // TODO: parse the toml shard array and store the values into a 'Shard' vector.
-    auto data = toml::parse(conf_filepath);
 }
 
 uint32 Config::get_key_shard(const std::string& key) const {
