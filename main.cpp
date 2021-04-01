@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
-#include "server.hpp"
 #include "db.hpp"
 #include "config.hpp"
+#include "./include/httplib.h"
 
 using namespace std::string_view_literals;
 int main(int argc, char** argv) {
