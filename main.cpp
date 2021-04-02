@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
         if (shard != conf.get_index()) {
             // if the shard doesn't match we need to move it to the matching shard
             std::string addr = conf.get_shard_addr(shard);
-            res.set_redirect(addr + "/get?key="+key);
+            res.set_redirect("http://"+addr + "/get?key="+key);
             return;
         }
 
@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
         uint32 shard = conf.get_key_shard(key);
         if (shard != conf.get_index()) {
             std::string addr = conf.get_shard_addr(shard);
-            res.set_redirect(addr+"/set?key="+key+"&val="+value);
+            res.set_redirect("http://"+addr+"/set?key="+key+"&val="+value);
             return;
         }
 
@@ -61,6 +61,27 @@ int main(int argc, char** argv) {
             res.status = 500;
             res.set_content("error setting value","text/plain");
         }
+    });
+
+    srv.Get("/list", [&](const httplib::Request& req, httplib::Response& res) {
+        auto content = db.get_key_list();
+        res.set_content(content, "text/plain");
+    });
+
+    srv.Get("/del", [&](const httplib::Request& req, httplib::Response& res) {
+        auto key = req.get_param_value("key");
+        uint32 shard = conf.get_key_shard(key);
+        if (shard != conf.get_index()) {
+            std::string addr = conf.get_shard_addr(shard);
+            res.set_redirect("http://"+addr+"/del?key="+key);
+            return;
+        }
+
+        db.del(key);
+    });
+
+    srv.Post("/stop", [&](const httplib::Request& req, httplib::Response& res) {
+        srv.stop();
     });
 
     srv.listen("localhost", 8080);

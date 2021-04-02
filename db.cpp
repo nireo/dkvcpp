@@ -23,3 +23,14 @@ leveldb::Status DB::get(const std::string& key, std::string* val) {
 leveldb::Status DB::del(const std::string& key) {
     return m_db->Delete(leveldb::WriteOptions(), key);
 }
+
+// get_key_list returns all the keys in a given shard database
+std::string DB::get_key_list() const {
+    std::string res;
+    leveldb::Iterator* it = m_db->NewIterator(leveldb::ReadOptions());
+    for (it->SeekToFirst(); it->Valid; it->Next()) {
+        res += it->key().ToString() + "\n";
+    }
+
+    return res;
+}

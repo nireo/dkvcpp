@@ -13,8 +13,12 @@ public:
     leveldb::Status put(const std::string& key, const std::string& val);
     leveldb::Status get(const std::string& key, std::string *val);
     leveldb::Status del(const std::string& key);
+    [[nodiscard]] std::string get_key_list() const;
 
-    DB(const std::string& path);
+    explicit DB(const std::string& path);
+    ~DB() {
+        delete m_db;
+    }
 private:
     leveldb::DB *m_db{};
 };
