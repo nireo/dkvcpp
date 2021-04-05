@@ -11,6 +11,11 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
 
+    if (argc < 2) {
+        std::cout << "hello" << "\n";
+        return EXIT_FAILURE;
+    }
+
     Config conf;
     conf.verify_shards(std::string(argv[1]));
 

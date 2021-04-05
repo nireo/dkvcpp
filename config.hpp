@@ -22,6 +22,9 @@ public:
     [[nodiscard]] uint32 get_key_shard(const std::string& key) const;
 
     bool verify_shards(const std::string& cur_name);
+    std::vector<Shard> get_shards() const {
+        return m_shards;
+    }
 
     int get_index() const;
     std::string get_shard_addr(int index) const;
