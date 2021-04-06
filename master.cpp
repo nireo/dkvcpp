@@ -9,6 +9,7 @@ void Master::start_heartbeat_checks() {
     std::vector<Shard> shards;
     shards = this->m_conf->get_shards();
     std::thread heartbeat_thread([&] {
+        // every 15 minutes check that a server is alive
         for (auto& sh : shards) {
             httplib::Client cli(sh.addr.c_str());
             auto res =cli.Get("/heartbeat");
