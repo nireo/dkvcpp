@@ -28,7 +28,7 @@ leveldb::Status DB::del(const std::string& key) {
 std::string DB::get_key_list() const {
     std::string res;
     leveldb::Iterator* it = m_db->NewIterator(leveldb::ReadOptions());
-    for (it->SeekToFirst(); it->Valid; it->Next()) {
+    for (it->SeekToFirst(); it->Valid(); it->Next()) {
         res += it->key().ToString() + "\n";
     }
 

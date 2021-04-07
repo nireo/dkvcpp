@@ -19,6 +19,7 @@ typedef unsigned int uint32;
 class Config {
 public:
     explicit Config();
+    explicit Config(const std::string& path);
     [[nodiscard]] uint32 get_key_shard(const std::string& key) const;
 
     bool verify_shards(const std::string& cur_name);

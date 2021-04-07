@@ -3,6 +3,8 @@
 //
 
 #include "config.hpp"
+#include <iostream>
+#include "./include/json.hpp"
 #include <fstream>
 
 uint32 Config::get_key_shard(const std::string& key) const {
@@ -76,6 +78,29 @@ Config::Config() {
     // this hasn't been set yet, we need to wait for the Config::verify_shards function to set the
     // correct index.
     m_current_index = -1;
+}
+
+Config::Config(const std::string& path) {
+     // read a JSON file
+    std::ifstream i(path);
+    nlohmann::json j;
+    i >> j;
+
+    std::vector<Shard> shards;
+    for (auto& shard : j["shards"]) {
+        Shard sh = {
+                shard["index"],
+                shard["name"],
+                shard["address"]
+        };
+
+        shards.push_back(sh);
+    }
+
+    m_shards = shards;
+    m_shard_count = static_cast<int>(shards.size());
+    m_current_index = -1;
+    m_addrs = std::unordered_map<int, std::string>();
 }
 
 int Config::get_index() const {

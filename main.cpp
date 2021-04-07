@@ -16,6 +16,8 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
 
+    Config conf_2("conf.json");
+
     Config conf;
     conf.verify_shards(std::string(argv[1]));
 
