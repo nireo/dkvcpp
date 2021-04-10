@@ -3,7 +3,6 @@
 //
 
 #include "config.hpp"
-#include <iostream>
 #include "./include/json.hpp"
 #include <fstream>
 
@@ -48,38 +47,6 @@ bool Config::verify_shards(const std::string& cur_name) {
     return true;
 }
 
-Config::Config() {
-    // Currently the shards a hard coded here since I had problems with loading the dynamic
-    // configurations. TODO: implement dynamic configurations
-    std::vector<Shard> shards;
-
-    // create three shards
-    shards.emplace_back();
-    shards.emplace_back();
-    shards.emplace_back();
-
-    // configure the shards
-    shards[0].addr = "localhost:8080";
-    shards[0].index = 0;
-    shards[0].name = "dkvshard1";
-
-    shards[1].addr = "localhost:8081";
-    shards[1].index = 1;
-    shards[1].name = "dkvshard2";
-
-    shards[2].addr = "localhost:8082";
-    shards[2].index = 2;
-    shards[2].name = "dkvshard3";
-
-    m_shards = shards;
-    m_shard_count = static_cast<int>(shards.size());
-    m_addrs = std::unordered_map<int, std::string>();
-
-    // this hasn't been set yet, we need to wait for the Config::verify_shards function to set the
-    // correct index.
-    m_current_index = -1;
-}
-
 Config::Config(const std::string& path) {
      // read a JSON file
     std::ifstream i(path);
@@ -91,7 +58,8 @@ Config::Config(const std::string& path) {
         Shard sh = {
                 shard["index"],
                 shard["name"],
-                shard["address"]
+                shard["address"],
+                true
         };
 
         shards.push_back(sh);
@@ -113,4 +81,14 @@ std::string Config::get_shard_addr(int index) const {
     }
 
     return m_addrs.at(index);
+}
+
+void Config::set_dead(int32_t index) {
+    // check that the shard is valid
+    for (auto& shard : m_shards) {
+        if (shard.index == index) {
+            shard.alive = false;
+            return;
+        }
+    }
 }

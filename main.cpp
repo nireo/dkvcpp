@@ -4,7 +4,6 @@
 #include "config.hpp"
 #include "./include/httplib.h"
 
-using namespace std::string_view_literals;
 int main(int argc, char** argv) {
     if (argc < 2) {
         std::cout << "you need to provide the current shard name" << "\n";
@@ -16,13 +15,17 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
 
-    Config conf_2("conf.json");
-
-    Config conf;
+    Config conf("conf.json");
     conf.verify_shards(std::string(argv[1]));
 
     DB db("./dkvdb");
     httplib::Server srv;
+
+    auto heartbeat_check = [&]() {
+
+    };
+
+    std::thread thread_object(heartbeat_check);
 
     srv.Get("/get", [&](const httplib::Request& req, httplib::Response& res) {
         auto key = req.get_param_value("key");
@@ -68,11 +71,6 @@ int main(int argc, char** argv) {
             res.status = 500;
             res.set_content("error setting value","text/plain");
         }
-    });
-
-    srv.Get("/list", [&](const httplib::Request& req, httplib::Response& res) {
-        auto content = db.get_key_list();
-        res.set_content(content, "text/plain");
     });
 
     srv.Get("/del", [&](const httplib::Request& req, httplib::Response& res) {

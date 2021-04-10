@@ -13,6 +13,9 @@ struct Shard {
     int index;
     std::string name;
     std::string addr;
+
+    // this is changed by the heartbeat checks performed every 15 seconds
+    bool alive;
 };
 
 typedef unsigned int uint32;
@@ -26,6 +29,9 @@ public:
     std::vector<Shard> get_shards() const {
         return m_shards;
     }
+
+    // make shard dead if response to heartbeat is invalid
+    void set_dead(int32_t index);
 
     int get_index() const;
     std::string get_shard_addr(int index) const;
